@@ -64,14 +64,10 @@ public class Ep1 {
 				}
 			} else {
 				ans += daysUntilEndOfMonth(a.year, a.month, a.day);
-				System.out.println(ans);
 				ans += (daysBetweenMonth(a.month, 12, isLeap(a.year)) + 31);
-				System.out.println(daysBetweenMonth(a.month, 12, isLeap(a.year)) + 31);
 				ans += daysBetweenYear(a.year, b.year);
-				System.out.println(daysBetweenYear(a.year, b.year));
 				ans += (31 + daysBetweenMonth(1, b.month, isLeap(b.year)) + b.day);
 				return ans;
-				// return 0;
 			}
 		}
 
@@ -81,6 +77,5 @@ public class Ep1 {
 		Date a = new Date(2007,8,8);
 		Date b = new Date(2012,10,31);
 		System.out.println(Date.daysBetweenDate(a, b));
-		// System.out.println(Date.daysBetweenYear(2007, 2012));
 	}
 }
