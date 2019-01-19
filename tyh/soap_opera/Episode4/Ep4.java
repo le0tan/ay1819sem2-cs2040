@@ -1,4 +1,3 @@
-import java.security.Permission;
 import java.util.*;
 
 /**
@@ -50,20 +49,37 @@ public class Ep4 {
         }
     }
 
-    private static class Number {
+    private static class Number implements Cloneable{
         int[] nums = new int[7];
         int digits = 0;
 
         public boolean isAround() {
             boolean[] vis = new boolean[7];
+            boolean[] used = new boolean[10];
             int cur = 0;
+            for(int i=0;i<digits;i++) {
+                if(nums[i] == 0 || used[nums[i]]) {
+                    return false;
+                } else {
+                    used[nums[i]] = true;
+                }
+            }
             if(digits==0) return false;
             else {
                 while(!vis[cur]) {
                     vis[cur] = true;
                     cur = (cur + nums[cur]) % digits;
                 }
-                return cur == 0;
+                if(cur == 0) {
+                    for(int i=0;i<digits;i++) {
+                        if(!vis[i]) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
 
@@ -89,46 +105,51 @@ public class Ep4 {
             }
         }
 
-        public Number genAns() {
-            Permutation pm = new Permutation(digits);
-            List<int[]> perm = pm.get();
+        public void print() {
+            for(int i=0;i<digits;i++) {
+                System.out.print(nums[i]);
+            }
+            System.out.println();
+        }
+
+        public Number plusOne() {
+            int a = this.toInt() + 1;
             Number ans = new Number();
             ans.digits = digits;
-            for(int i=0;i<digits;i++) {
-                ans.nums[i] = 9;
-            }
-            for(int[] elem: perm) {
-                Number current = new Number();
-                current.digits = digits;
-                for(int i=0;i<digits;i++) {
-                    current.nums[i] = nums[elem[i]-1];
-                }
-                if(current.isAround() && ans.greaterThan(current)) {
-                    ans = current;
-                }
+            for(int i=digits-1;i>=0;i--) {
+                ans.nums[i] = a%10;
+                a/=10;
             }
             return ans;
+        }
+
+        public Number genAns() {
+            Number current = new Number();
+            current.digits = digits;
+            for(int i=0;i<digits;i++) {
+                current.nums[i] = nums[i];
+            }
+            while(!current.isAround()) {
+                current = current.plusOne();
+                // System.out.print("h");
+            }
+            return current;
         }
     }
     public static void main(String[] args) {
         Number n = new Number();
-        n.digits = 5;
-        n.nums = new int[] {8,1,3,6,2};
-        // System.out.print(n.genAns().toInt());
-        // Permutation pr = new Permutation(5);
-        // List<int[]> t = pr.get();
-        // System.out.println(t.size());
-        // for(int i=0;i<t.size();i++) {
-        //     int[] current = t.get(i);
-        //     for(int j=0;j<5;j++) {
-        //         System.out.print(current[j]);
-        //     }
-        //     System.out.println();
-        // }
-        // System.out.println(t.get(2)[4]);
-        int[] ans = n.genAns().nums;
-        for(int i=0;i<ans.length;i++) {
-            System.out.print(ans[i]);
+        Scanner sc = new Scanner(System.in);
+        boolean ok = false;
+        while(true) {
+            String t = sc.next();
+            if(t.equals("0")) break;
+            else {
+                n.digits = t.length();
+                for(int i=0;i<n.digits;i++) {
+                    n.nums[i] = Character.getNumericValue(t.charAt(i));
+                }
+                n.genAns().print();
+            }
         }
     }
 }
