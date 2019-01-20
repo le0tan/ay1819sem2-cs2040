@@ -7,27 +7,19 @@ import java.util.Scanner;
  * Ep5
  */
 public class Ep5 {
-    static boolean greaterThan(Integer a, Integer b) {
-        String as = a.toString();
-        String bs = b.toString();
-        int[] ar = new int[as.length()];
-        int[] br = new int[bs.length()];
-        for(int i=0;i<as.length();i++) ar[i] = Character.getNumericValue(as.charAt(i));
-        for(int i=0;i<bs.length();i++) br[i] = Character.getNumericValue(bs.charAt(i));
-        // boolean ok = false;
-        if(ar[0] == br[0]) {
-            int len = ar.length < br.length ? ar.length : br.length;
-            for(int i=0;i<len;i++) {
-                if(ar[i] > br[i]) return true;
-                else if(ar[i] == br[i]) continue;
-                else return false;
-            }
-            return ar.length < br.length;
-        } else {
-            // System.out.print(br[0]);
-            return ar[0] > br[0];
+    public static int concatInt(int a, int b) {
+        int t = b;
+        while(t != 0) {
+            a *= 10;
+            t /= 10;
         }
+        return a + b;
     }
+
+    private static boolean greaterThan(int a, int b) {
+        return concatInt(a,b) > concatInt(b,a);
+    }
+
     static List<Integer> sort(List<Integer> l) {
         int len = l.size();
         for(int i=len-2;i>=0;i--) {
