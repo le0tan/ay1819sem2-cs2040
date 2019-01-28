@@ -8,19 +8,12 @@ import java.util.*;
 
 public class Sequences {
 
-	/**
-	 * a basic problem.
-	 * How can I submitted it 7 times. 
-	 * Such a shame
-	 * OMG.
-	 */
+
 	private void run() {
 		Scanner sc = new Scanner(System.in);
 		long n = sc.nextLong();
 		int  t = sc.nextInt();
 		long a = sc.nextLong(), b = sc.nextLong();
-		// the sequence of the input;
-		// My brain was not working again.
 		long tmp;
 		switch (t){
 			case 1:
@@ -30,8 +23,6 @@ public class Sequences {
 					tmp += b;
 				}
 				System.out.println(tmp);
-				//No space after the last integer. I noticed it but i dont know why i still added " " after it. XD
-				// My brain was not working. I was too sleepy.
 				break;
 			case 2:
 				tmp = a;
