@@ -19,10 +19,10 @@ else
 fi
 
 #enumerate all .in files in the same directory
-for i in *.in
+for i in ./input/*.in
 do
     java $problem < $i > ${i/.in/.o}
-    results=$( diff ${i/.in/.o} ${i/.in/.out} > ${i/.in/.diff})
+    results=$( diff ${/./input/$i/.in/.o} ${/./output/$i/.in/.out} > ${i/.in/.diff})
     if [ $? -eq 0 ]     #check if there is a difference between the two files
     then
         echo ${i/.in}": Correct"
