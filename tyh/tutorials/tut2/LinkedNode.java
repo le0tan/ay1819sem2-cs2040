@@ -1,7 +1,7 @@
 public class LinkedNode<E> {
-  E elem;
-  LinkedNode<E> prev;
-  LinkedNode<E> next;
+  public E elem;
+  public LinkedNode<E> prev;
+  public LinkedNode<E> next;
   LinkedNode(E elem) {
     this.elem = elem;
     this.prev = null;
@@ -17,6 +17,7 @@ public class LinkedNode<E> {
     this.prev = prev;
     this.next = next;
   }
-  public void setNext(LinkedNode<E> next) { this.next = next; }
-  public void setPrev(LinkedNode<E> prev) { this.prev = prev; }
+//  public void setNext(LinkedNode<E> next) { this.next = next; }
+//  public void setPrev(LinkedNode<E> prev) { this.prev = prev; }
+//	public void setElem(E elem) { this.elem = elem; }
 }
