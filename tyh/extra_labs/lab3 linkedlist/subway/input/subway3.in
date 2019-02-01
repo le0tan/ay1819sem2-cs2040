@@ -1,0 +1,28 @@
+5
+newton
+orchard
+somerset
+dhobyghaut
+cityhall
+21
+PATH orchard orchard
+PATH somerset somerset
+PRINT cityhall
+TIME cityhall orchard
+BUILD newton bundaranhi
+TIME cityhall bundaranhi
+BUILD bundaranhi cempakaputih
+TIME cempakaputih orchard
+PATH somerset cempakaputih
+BUILD newton alamsutera
+TIME alamsutera cempakaputih
+TIME cempakaputih alamsutera
+PATH alamsutera cempakaputih
+PATH cempakaputih alamsutera
+BUILD dhobyghaut serpong
+TIME serpong bundaranhi
+BUILD bundaranhi thamrin
+TIME bundaranhi thamrin
+TIME bundaranhi cempakaputih
+PATH bundaranhi cempakaputih
+PRINT cempakaputih

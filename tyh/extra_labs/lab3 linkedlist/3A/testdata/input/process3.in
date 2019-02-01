@@ -1,0 +1,7 @@
+6
+execute Flash 3
+execute Apache 2
+kill 1
+execute Paint 2
+execute Gedit 1
+kill 3

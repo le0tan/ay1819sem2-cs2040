@@ -1,0 +1,13 @@
+12
+arrive john 160
+arrive kevin 170
+arrive william 150
+leave ivan
+arrive ivan 170
+arrive ken 160
+shortest 1
+shortest 3
+count 150 165
+leave william
+shortest 3
+count 145 155

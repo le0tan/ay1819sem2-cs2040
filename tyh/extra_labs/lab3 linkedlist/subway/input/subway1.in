@@ -1,0 +1,12 @@
+3
+clementi
+jurong
+bugis
+7
+TIME clementi bugis
+TIME clementi clementi
+PATH clementi bugis
+BUILD bugis tampines
+TIME clementi bugis
+PATH clementi bugis
+PRINT jurong

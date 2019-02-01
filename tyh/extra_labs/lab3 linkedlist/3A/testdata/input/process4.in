@@ -1,0 +1,12 @@
+11
+execute pool 3
+execute cards 2
+execute notepad 3
+execute vlc 4
+execute torrent 2
+execute office 4
+kill 1
+execute terminal 2
+execute launchapd 4
+execute apache 5
+kill 1

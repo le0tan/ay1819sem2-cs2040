@@ -1,0 +1,8 @@
+7
+execute chrome 3
+execute gedit 2
+execute notepad 3
+execute vlc 4
+execute torrent 2
+execute paint 1
+kill 1
