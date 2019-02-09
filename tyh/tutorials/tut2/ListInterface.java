@@ -1,6 +1,6 @@
 import java.util.*;
 
-public interface LinkedListInterface <E> {
+public interface ListInterface <E> {
 
 	public boolean 	isEmpty( );
 	public int 		size ( );
@@ -10,7 +10,4 @@ public interface LinkedListInterface <E> {
 	public E 		removeFirst ( ) throws NoSuchElementException;  
 
 	public void 	print ();
-
-	// ....etc....
-	// ....etc....
 }

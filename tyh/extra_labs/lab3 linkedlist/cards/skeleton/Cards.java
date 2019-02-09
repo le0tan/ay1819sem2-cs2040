@@ -8,14 +8,67 @@
 import java.util.*;
 
 public class Cards {
-    
+    TailedLinkedList<Card> cards;
+
+    Cards() {
+        cars = new TailedLinkedList<Card>();
+    }
+
+    private void swap(int a, int b, int c, int d) {
+        ListNode<Card> beforeA = get(a-2);
+        ListNode<Card> A = beforeA.getNext();
+        ListNode<Card> B = get(b-1);
+        ListNode<Card> afterB = B.getNext();
+        ListNode<Card> beforeC = get(c-2);
+        ListNode<Card> C = beforeC.getNext();
+        ListNode<Card> D = get(d-1);
+        ListNode<Card> afterD = D.getNext();
+        beforeA.setNext(C);
+        B.setNext(afterD);
+        beforeC.setNext(A);
+        D.setNext(afterB);
+    }
+
+    private void details(int index) {
+        Card t = cards.get(index);
+        System.out.printf("%s %d\n", t.name, t.age);
+    }
+
+    private void shuffle() {
+        ListNode<Card> first;
+        ListNode<Card> second;
+        
+    }
+
+    private void print() {
+        ListNode<Card> t = cards.getHead();
+        while(true) {
+            System.out.print(t.getElement().name);
+            if(t.getNext() == null) {
+                break;
+            } else {
+                t = t.getNext();
+                System.out.print(" ");
+            }
+        }
+    }
+
     public void run() {
         // implement your "main" method here
+
     }
     
     public static void main(String[] args) {
         Cards myCards = new Cards();
         myCards.run();
+    }
+}
+
+class Card {
+    String name;
+    int age;
+    Card(String name, int age) {
+        this.name = name; this.age = age;
     }
 }
 
@@ -138,6 +191,14 @@ class TailedLinkedList<E> {
             current = current.getNext();
         }
         throw new NoSuchElementException("No node to remove");
+    }
+
+    public ListNode<E> get(int index) {
+        ListNode<E> res = head;
+        for(int i=0;i<index-1;i++) {
+            res = res.getNext();
+        }
+        return res;
     }
 }
 
