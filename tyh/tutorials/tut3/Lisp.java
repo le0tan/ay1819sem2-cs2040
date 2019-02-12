@@ -1,131 +1,112 @@
 import java.util.*;
-
-import javax.sound.midi.SysexMessage;
-/**
- * Lisp
- */
 public class Lisp {
-
-    private static boolean isOperator(String a) {
-        String[] ops = {"(", ")", "+", "-", "*", "/"};
-        for(String s: ops) {
-            if(a.equals(s)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean isArith(String a) {
-        String[] ops = {"+", "-", "*", "/"};
-        for(String s: ops) {
-            if(a.equals(s)){
-                return true;
-            }
-        }
-        return false;
-    }
-    public static void main(String[] args) {
-        Stack<String> ops = new Stack<String>();
-        Stack<Double> temp = new Stack<Double>();
-        Scanner sc = new Scanner(System.in);
-        boolean ok = true;
-        boolean done = false;
-        while(sc.hasNext() && ok && !done) {
-            String t = sc.next();
-            System.out.println(t);
-            switch(t) {
-                case "(": {
-                    ops.push("(");
-                    break;
-                }
-                case ")": {
-                    temp = new Stack<Double>();
-                    boolean em = false;
-                    while(!isOperator(ops.peek())) {
-                        temp.push(Double.valueOf(ops.pop()));
-                    }
-                    System.out.println("h");
-                    String op = ops.pop();
-                    if(!isArith(op) || !(ops.pop()=="(")) {
-                        ok = false;
-                        break;
-                    } else {
-                        if(ops.isEmpty())
-                            em = true;
-                        if(temp.size() == 0) {
-                            if(op.equals("*")) {
-                                ops.push("1");
-                                if(em) done = true;
-                                break;
-                            } else if(op.equals("+")) {
-                                ops.push("0");
-                                if(em) done = true;
-                                break;
-                            } else {
-                                ok = false;
-                                break;
-                            }
-                        } else if(temp.size() == 1){
-                            switch(op) {
-                                case "+":
-                                ops.push(temp.pop().toString());
-                                if(em) done = true;
-                                break;
-                                case "-":
-                                ops.push("-"+temp.pop().toString());
-                                if(em) done = true;
-                                break;
-                                case "*":
-                                ok = false;
-                                break;
-                                case "/":
-                                ops.push(Double.toString(1.0/temp.pop()));
-                                if(em) done = true;
-                                break;
-                            }
-                        } else {
-                            Double res = 0.0;
-                            switch(op) {
-                                case "+":
-                                for(Double d: temp) {
-                                    res += d;
-                                }
-                                break;
-                                case "-":
-                                res = temp.get(temp.size()-1);
-                                for(int i=temp.size()-2;i>=0;i--){
-                                    res -= temp.get(i);
-                                }
-                                break;
-                                case "*":
-                                res = 1.0;
-                                for(Double d: temp) {
-                                    res *= d;
-                                }
-                                break;
-                                case "/":
-                                    res = temp.get(temp.size()-1);
-                                    for(int i=temp.size()-2;i>=0;i--){
-                                        res /= temp.get(i);
-                                    }
-                                    break;
-                            }
-                            ops.push(res.toString());
-                            if(em) done = true;
-                        }
-                    }
-                    break;
-                }
-                default:
-                    ops.push(t);
-                    break;
-            }
-        }
-        if(ok) {
-            System.out.println(ops.pop());
-        } else {
-            System.out.println("Invalid expression!");
-        }
-    }
+	private static boolean isOp(String a) {
+		return a.equals("+") || a.equals("-") || a.equals("*") || a.equals("/");
+	}
+	private static boolean isPar(String a) {
+		return a.equals("(") || a.equals(")");
+	}
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		boolean ok = true;
+		Stack<String> ops = new Stack<String>();
+		while(ok && sc.hasNext()) {
+			String t = sc.next();
+			if(t.equals(")")) {
+				if(ops.isEmpty()) {ok=false;break;}
+				Stack<String> nums = new Stack<String>();
+				while(!ops.isEmpty() && !isOp(ops.peek()) && !isPar(ops.peek())) {
+					nums.push(ops.pop());
+				}
+				if(ops.isEmpty()) {ok=false;break;}
+				if(isPar(ops.peek())) {
+					ok = false;
+					break;
+				} else {
+					String op = ops.pop();
+					if(ops.isEmpty()) {ok=false;break;}
+					else {
+						if(!ops.pop().equals("(")) {ok=false;break;}
+					}
+					if(nums.isEmpty() && (op.equals("-") || op.equals("/"))) {
+						ok = false;
+						break;
+					} else {
+						if(nums.isEmpty()) {
+							switch(op) {
+								case "+":
+									ops.push("0");
+									break;
+								case "*":
+									ops.push("1");
+									break;
+								default:
+									ok = false;
+									break;
+							}
+						} else if(nums.size() == 1) {
+							String nn = nums.pop();
+							boolean neg = nn.charAt(0)=='-' ? true : false;
+							switch(op) {
+								case "+":
+									ops.push(nums.pop());
+									break;
+								case "-":
+									ops.push(neg?nn.substring(1,nn.length()):"-"+nn);
+									break;
+								case "*":
+									ok = false;
+									break;
+								case "/":
+									ops.push(Double.toString((double)1/Double.valueOf(nn)));
+									break;
+								default:
+									ok = false;
+									break;
+							}
+						} else {
+							double tres = Double.valueOf(nums.pop());
+							while(!nums.isEmpty()) {
+								double cur = Double.valueOf(nums.pop());
+								switch(op) {
+									case "+":
+										tres += cur;
+										break;
+									case "-":
+										tres -= cur;
+										break;
+									case "*":
+										tres *= cur;
+										break;
+									case "/":
+										tres /= cur;
+										break;
+									default:
+										ok = false;
+										break;
+								}
+							}
+							ops.push(Double.toString(tres));
+						}
+					}
+				}
+			} else {
+				ops.push(t);
+			}
+		}
+		double k = 0.0;
+		if(ok && !ops.isEmpty()) {
+			String res = ops.pop();
+			try {
+				k = Double.valueOf(res);
+			} catch (Exception e) {
+				ok = false;
+			}
+		}
+		if(!ok || !ops.isEmpty()) {
+			System.out.println("Illegal expression!");
+		} else {
+			System.out.println(k);
+		}
+	}
 }
