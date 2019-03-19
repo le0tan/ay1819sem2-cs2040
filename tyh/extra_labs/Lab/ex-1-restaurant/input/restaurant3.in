@@ -1,0 +1,11 @@
+3
+smalltable 5
+mediumtable 300
+largetable 1000
+6
+1 requestsmallone 6 smalltable
+1 requestlargeone 10 largetable
+1 requestmediumone 239 mediumtable
+5 mediumtable
+5 largetable
+5 smalltable

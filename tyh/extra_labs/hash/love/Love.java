@@ -33,8 +33,8 @@ public class Love {
 					cur.put(t, 1);
 				}
 				curlen += input.get(right).length();
-				if(cur.size() == set.size()) { ok = true; break; }
 				right++;
+				if(cur.size() == set.size()) { ok = true; break; }
 			} // found consecutive strings that meet the req
 			if(ok) ans = Math.min(ans, curlen);
 			else break;
@@ -42,6 +42,7 @@ public class Love {
 				String t = input.get(left);
 				if(cur.get(t) == 1) {
 					cur.remove(t);
+          curlen -= input.get(left).length();
 					left++;
 					break;
 				} else {
