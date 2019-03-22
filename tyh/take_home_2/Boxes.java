@@ -11,14 +11,15 @@ public class Boxes {
 		//implement your "main" method here
 		Scanner sc = new Scanner(System.in);
 		Set<Pair> set = new HashSet<>();
-		Set<Integer> row = new HashSet<>();
-		Set<Integer> col = new HashSet<>();
-		int q=sc.nextInt(),r=sc.nextInt(),c=sc.nextInt();
+		Set<Long> row = new HashSet<>();
+		Set<Long> col = new HashSet<>();
+		int q=sc.nextInt();
+		long r=sc.nextLong(),c=sc.nextLong();
 		for(int i=0;i<q;i++) {
 			String cmd = sc.next();
 			switch(cmd) {
 				case "SIT":
-					int cr=sc.nextInt(), cc=sc.nextInt();
+					long cr=sc.nextLong(), cc=sc.nextLong();
 					Pair p = new Pair(cr,cc);
 					if(!set.contains(p)) {
 						set.add(p);
@@ -27,20 +28,20 @@ public class Boxes {
 					}
 					break;
 				case "BOX":
-					Pair pp = new Pair(sc.nextInt(),sc.nextInt());
+					Pair pp = new Pair(sc.nextLong(),sc.nextLong());
 					if(set.contains(pp))
 						System.out.println("Y");
 					else
 						System.out.println("N");
 					break;
 				case "ROW":
-					if(row.contains(sc.nextInt()))
+					if(row.contains(sc.nextLong()))
 						System.out.println("Y");
 					else 
 						System.out.println("N");
 					break;
 				case "COL":
-					if(col.contains(sc.nextInt()))
+					if(col.contains(sc.nextLong()))
 						System.out.println("Y");
 					else 
 						System.out.println("N");
@@ -58,9 +59,9 @@ public class Boxes {
 }
 
 class Pair {
-	int x;
-	int y;
-	public Pair(int a, int b) {
+	long x;
+	long y;
+	public Pair(long a, long b) {
 		x=a;
 		y=b;
 	}
@@ -70,7 +71,8 @@ class Pair {
 	}
 	@Override
 	public int hashCode() {
-		return 23*x-29*y;
+		long[] t = {x,y};
+		return Arrays.hashCode(t);
 	}
 	@Override
 	public boolean equals(Object o) {
