@@ -16,7 +16,7 @@ class Grader {
       read();
       if (query == 'I') {
         h.Insert(nextInt());
-      } else if (query == 'P') {
+      } else if (query == 'E') {
         pw.println(h.ExtractMax());
       } else if (query == 'U') {
         h.UpdateKey(nextInt(), nextInt());
