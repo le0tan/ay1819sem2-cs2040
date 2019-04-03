@@ -4,11 +4,12 @@ import java.util.*;
 
 // Every vertex in this BST is a Java Class
 class BSTVertex {
-  BSTVertex(int v) { key = v; parent = left = right = null; height = 0; }
+  BSTVertex(int v) { key = v; parent = left = right = null; height = 0; bf = 0; }
   // all these attributes remain public to slightly simplify the code
   public BSTVertex parent, left, right;
   public int key;
   public int height; // will be used in lecture on AVL
+  public int bf; // the balance factor
 }
 
 // This is just a sample implementation
@@ -108,28 +109,97 @@ public class BST {
   private void inorder(BSTVertex T) {
     if (T == null) return;
     inorder(T.left);                               // recursively go to the left
-    System.out.printf(" %d", T.key);                      // visit this BST node
+    System.out.printf(" (%d, H:%d, BF: %d)", T.key, T.height, T.bf);                      // visit this BST node
     inorder(T.right);                             // recursively go to the right
   }
 
   // public method called to insert a new key with value v into BST
-  public void insert(int v) { root = insert(root, v); }
-
+  public void insert(int v) { 
+    BSTVertex[] insertedVertex = new BSTVertex[1];
+    root = insert(root, v, insertedVertex); 
+    if(insertedVertex != null) {
+      // check balance factor 
+      BSTVertex i = insertedVertex[0];
+      balance(i);
+    } else {
+      System.out.println("Error");
+    }
+  }
+  
   // helper recursive method to perform insertion of new vertex into BST
-  private BSTVertex insert(BSTVertex T, int v) {
-    if (T == null) return new BSTVertex(v);          // insertion point is found
+  private BSTVertex insert(BSTVertex T, int v, BSTVertex[] inserted) {
+    if (T == null) {
+      inserted[0] = new BSTVertex(v);
+      return inserted[0];          // insertion point is found
+    }
 
-    if (T.key < v) {                                      // search to the right
-      T.right = insert(T.right, v);
+    T.height++;
+    if (T.key < v) {     
+      T.bf--;                                 // search to the right
+      T.right = insert(T.right, v, inserted);
       T.right.parent = T;
     }
-    else {                                                 // search to the left
-      T.left = insert(T.left, v);
+    else {   
+      T.bf++;                                              // search to the left
+      T.left = insert(T.left, v, inserted);
       T.left.parent = T;
     }
 
     return T;                                          // return the updated BST
   }  
+
+  private void balance(BSTVertex t) {
+    // right[1] = whether the last vertex is on the right
+    // right[0] = whether the last last vertex is on the right
+    while(t != null) {
+      System.out.println("asd");
+      if(Math.abs(t.bf) >= 2) {
+        System.out.printf("Rotate %d at bf %d\n", t.key, t.bf);
+        rotate(t);
+      }
+      t = t.parent;
+    }
+  }
+
+  private void rotate(BSTVertex t) {
+    if(t.right != null && t.bf==-2 && t.right.bf <= 0 && t.right.bf >= -1) {
+      rotateLeft(t);
+    } else if(t.left != null && t.bf == 2 && t.left.bf >= 0 && t.left.bf <= 1) {
+      rotateRight(t);
+    } else if(t.right != null && t.bf == -2 && t.right.bf == 1) {
+      rotateRight(t.right);
+      rotateLeft(t);
+    } else {
+      rotateLeft(t.left);
+      rotateRight(t);
+    }
+  }
+
+  private void rotateLeft(BSTVertex t) {
+    BSTVertex w = t.right;
+    w.parent = t.parent;
+    t.parent = w;
+    t.right = w.left;
+    if(w.left != null) {
+      w.left.parent = t;
+    }
+    w.left = t;
+    // if(t.right != null) t.right.left = t;
+  }
+
+  private void rotateRight(BSTVertex t) {
+    BSTVertex w = t.left;
+    w.parent = t.parent;
+    t.parent = w;
+    t.left = w.right;
+    if(w.right != null) {
+      w.right.parent = t;
+    }
+    w.right = t;
+    // if(t.left != null) t.left.right = t;
+  }
+
+
 
   // public method to delete a vertex containing key with value v from BST
   public void delete(int v) { root = delete(root, v); }
