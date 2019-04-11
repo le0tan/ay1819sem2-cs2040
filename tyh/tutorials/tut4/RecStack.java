@@ -11,7 +11,7 @@ public class RecStack {
         }
     }
     public void insert(Stack<Integer> s, Integer val) {
-        if(s.peek()<=val) {
+        if(s.isEmpty() || s.peek()<=val) {
             s.push(val);
         } else {
             int temp = s.pop();

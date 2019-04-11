@@ -3,17 +3,17 @@
  */
 public class Paint {
 
-    public static void paintBucketFill(int[][] mat, int row, int col, int color) {
+    public static void paintBucketFill(int[][] mat, int row, int col, int color, int initColor) {
         if(row < 0 || col < 0 || row >= mat.length || (mat.length>=1 && col >= mat[0].length)) {
             return;
-        } else if (mat[row][col] != 0){
+        } else if (mat[row][col] != initColor){
             return;
         } else {
             mat[row][col] = color;
-            paintBucketFill(mat, row+1, col, color);
-            paintBucketFill(mat, row, col+1, color);
-            paintBucketFill(mat, row-1, col, color);
-            paintBucketFill(mat, row, col-1, color);
+            paintBucketFill(mat, row+1, col, color, initColor);
+            paintBucketFill(mat, row, col+1, color, initColor);
+            paintBucketFill(mat, row-1, col, color, initColor);
+            paintBucketFill(mat, row, col-1, color, initColor);
         }
     }
 
@@ -33,7 +33,7 @@ public class Paint {
         System.out.println("Before fill...");
         printMatrix(colourMatrix);
         System.out.println();
-        paintBucketFill(colourMatrix, 2, 3, 2);
+        paintBucketFill(colourMatrix, 2, 3, 2, 0);
         System.out.println("After fill...");
         printMatrix(colourMatrix);
     }
